@@ -1,0 +1,113 @@
+
+services:
+
+  # Esto va para el perfil de desarrollo
+  
+  debian:
+    build: .
+    container_name: iot-debian
+    depends_on:
+      - mosquitto
+      - grafana
+      - influxdb
+      - nodered
+      - nginx
+    restart: unless-stopped
+    command: ["/bin/bash", "-c", "sleep 10 && /sensores.sh"]
+    networks:
+      - iot-net
+    profiles:
+      - desarrollo
+ 
+  ## Perfil de producción 
+
+  mosquitto:
+    image: eclipse-mosquitto:latest
+    container_name: iot-mosquitto
+    restart: unless-stopped
+    ports:
+      - "1883:1883"
+    volumes:
+      - ./logs/mosquitto:/mosquitto/log
+      - ./config/mosquitto/mosquitto.conf:/mosquitto/config/mosquitto.conf
+    networks:
+      - iot-net
+
+  nodered:
+    image: nodered/node-red:latest
+    container_name: iot-nodered
+    restart: unless-stopped
+    ports:
+      - "1880:1880"
+    volumes:
+      - node-red-data:/data
+    environment:
+      - TZ=Europe/Madrid
+    depends_on:
+      - mosquitto
+    networks:
+      - iot-net
+  
+  influxdb:
+    image: influxdb:latest
+    container_name: iot-influxdb
+    depends_on:
+      - nodered
+    restart: unless-stopped
+    ports:
+      - "8086:8086"
+    volumes:
+      - influx-data:/var/lib/influxdb2
+      - influx-config:/etc/influxdb2
+    networks:
+      - iot-net
+
+  grafana:
+    image: grafana/grafana:latest
+    user: "472" #Para que no haya problemas con los permisos
+    container_name: iot-grafana
+    depends_on:
+      - influxdb
+    ports:
+      - "3000:3000"
+    restart: unless-stopped
+    environment:
+      - GF_AUTH_DISABLE_LOGIN_FORM=false # Habilita el formulario de inicio de sesión
+      # Para un acceso anónimo y sin seguridad
+      #- GF_AUTH_DISABLE_LOGIN_FORM=true
+      #- GF_AUTH_ANONYMOUS_ENABLED=true
+      #- GF_AUTH_ANONYMOUS_ORG_ROLE=Admin
+      #- GF_SECURITY_ALLOW_EMBEDDING=true
+    networks:
+      - iot-net
+    volumes:
+      - ./config/grafana:/var/lib/grafana
+
+  nginx:
+    image: nginx:latest
+    ports:
+      - "80:80"
+      - "443:443"
+    depends_on:
+      - mosquitto
+      - grafana
+      - influxdb
+      - nodered
+    restart: unless-stopped
+    volumes:
+      - ./config/nginx/ssl/localhost.crt:/etc/nginx/ssl/localhost.crt
+      - ./config/nginx/ssl/localhost.key:/etc/nginx/ssl/localhost.key
+      - ./config/nginx/conf.d:/etc/nginx/conf.d
+    networks:
+      - iot-net
+
+volumes:
+  mosquitto:
+  node-red-data:
+  influx-data:
+  influx-config:
+  grafana-storage:
+
+
+networks:
+  iot-net:
