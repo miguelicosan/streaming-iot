@@ -16,7 +16,7 @@ services:
     command: ["/bin/bash", "-c", "sleep 10 && /sensores.sh"]
     networks:
       - iot-net
-    #profiles: ["desarrollo"]
+    profiles: ["desarrollo"]
  
   ## Perfil de producción 
 
@@ -72,7 +72,9 @@ services:
     restart: unless-stopped
     environment:
       - GF_AUTH_DISABLE_LOGIN_FORM=false # Habilita el formulario de inicio de sesión
+
       # Para un acceso anónimo y sin seguridad
+
       #- GF_AUTH_DISABLE_LOGIN_FORM=true
       #- GF_AUTH_ANONYMOUS_ENABLED=true
       #- GF_AUTH_ANONYMOUS_ORG_ROLE=Admin
