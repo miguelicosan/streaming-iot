@@ -78,10 +78,23 @@ Los servicios definidos en `docker-compose.yaml` incluyen:
 
 Tendrás que añadir tu programación para cada sensor. He modificado el payload para identificar a cada sensor. 
 
+<div style="width: 70%; margin: auto; text-align: center;">
+    <img src="./img/node-red.png" alt="Node-Red" style="width: 100%;">
+</div>
+
+
 ### InfluxDB
 Debes generar una clave para tu bucket.
 
+<div style="width: 70%; margin: auto; text-align: center;">
+    <img src="./img/influxdb.png" alt="Node-Red" style="width: 100%;">
+</div>
+
 ### Grafana
+
+<div style="width: 70%; margin: auto; text-align: center;">
+    <img src="./img/grafana.png" alt="Node-Red" style="width: 100%;">
+</div>
 
 1. He añadido la gestión de usuarios Importante poner el propietario a 472:472.
     ```bash
