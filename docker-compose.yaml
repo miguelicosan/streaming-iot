@@ -16,8 +16,7 @@ services:
     command: ["/bin/bash", "-c", "sleep 10 && /sensores.sh"]
     networks:
       - iot-net
-    profiles:
-      - desarrollo
+    #profiles: ["desarrollo"]
  
   ## Perfil de producción 
 

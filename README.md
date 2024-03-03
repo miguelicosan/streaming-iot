@@ -63,26 +63,6 @@ Los servicios definidos en `docker-compose.yaml` incluyen:
 - **InfluxDB:** http://localhost:8086 ó https://localhost/influxdb/
 - **Grafana:** http://localhost:3000 ó https://localhost/grafana/
 
-## Documentación de Referencia
-
-Enlaces a la documentación oficial de las herramientas utilizadas para profundizar en su configuración y uso:
-
-- [eclipse-mosquitto - Imagen Oficial](https://hub.docker.com/_/eclipse-mosquitto)
-- [nodered/node-red - Imagen Docker](https://hub.docker.com/r/nodered/node-red)
-- [influxdb - Imagen Oficial](https://hub.docker.com/_/influxdb)
-- [grafana/grafana - Imagen Docker](https://hub.docker.com/r/grafana/grafana)
-
-## Instrucciones de Uso
-
-1. **Preparación:** Asegúrate de tener Docker y Docker Compose instalados en tu sistema.
-2. **Construcción:** Ejecuta `docker compose build` para construir los servicios definidos.
-3. **Despliegue:** Con `docker compose up`, inicia los contenedores.
-4. **Verificación:** Accede a las interfaces web de Node-Red, InfluxDB y Grafana mediante los enlaces proporcionados anteriormente.
-
-## Contribuciones
-
-Las contribuciones al proyecto son bienvenidas. Si deseas colaborar, por favor considera forkear el repositorio y enviar tus pull requests.
-
 ## Consideraciones a tener en cuenta
 
 ### Mosquitto
@@ -107,7 +87,6 @@ Debes generar una clave para tu bucket.
     ```bash
     sudo chown -R 472:472 ./config/grafana
     ```
-
 
 ### Debian
 
@@ -157,3 +136,16 @@ Recuerda cambiar `TU_ORGANIZACION` por lo que tu quieras.
     ```bash
     sudo update-ca-certificates
     ```
+
+## Documentación de Referencia
+
+Enlaces a la documentación oficial de las herramientas utilizadas para profundizar en su configuración y uso:
+
+- [eclipse-mosquitto - Imagen Oficial](https://hub.docker.com/_/eclipse-mosquitto)
+- [nodered/node-red - Imagen Docker](https://hub.docker.com/r/nodered/node-red)
+- [influxdb - Imagen Oficial](https://hub.docker.com/_/influxdb)
+- [grafana/grafana - Imagen Docker](https://hub.docker.com/r/grafana/grafana)
+
+## Contribuciones
+
+Las contribuciones al proyecto son bienvenidas. Si deseas colaborar, por favor considera forkear el repositorio y enviar tus pull requests.
